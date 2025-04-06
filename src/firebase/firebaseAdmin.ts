@@ -1,6 +1,12 @@
 import admin from "firebase-admin";
+import * as path from "path";
 
-const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+const rootPath = path.resolve(__dirname, "../..");
+
+const serviceAccountPath = path.resolve(
+  rootPath,
+  "cranster-snippets-app-firebase-admin.json"
+);
 
 if (!serviceAccountPath) {
   throw new Error(

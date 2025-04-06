@@ -4,7 +4,7 @@
 # Environment variable files
 .env
 
-
+cranster-snippets-app-firebase-admin.json
 # TypeScript build directory
 /dist/
 

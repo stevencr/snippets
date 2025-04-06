@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
 
@@ -16,10 +16,19 @@ export const generateToken = (userId: string): string => {
  * @param token - The JWT token to verify.
  * @returns {object | null} - Returns the decoded token if valid, otherwise null.
  */
-export const verifyToken = (token: string): object | null => {
+export const verifyToken = (token: string): JwtPayload | null => {
   try {
-    return jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token, SECRET_KEY);
+
+    // You may want to cast the decoded value to JwtPayload
+    if (typeof decoded === "object" && decoded !== null) {
+      return decoded as JwtPayload;
+    }
+
+    return null;
   } catch (err) {
-    return null; // Return null if the token is invalid
+    // Handle error, token invalid
+    console.error("Error verifying token:", err);
+    return null;
   }
 };
