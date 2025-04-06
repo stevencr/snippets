@@ -10,9 +10,7 @@ export const resolvers = {
       { email, password }: { email: string; password: string }
     ) => {
       try {
-        console.log("This is the data", email, password);
         const authResponse = await signUp(email, password);
-        console.log("Response", authResponse);
         return authResponse; // Return the response from signUp function
       } catch (error: unknown) {
         throw new Error(

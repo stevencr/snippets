@@ -12,6 +12,11 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  if (req.body?.operationName === "IntrospectionQuery") {
+    // This is an introspection query (used by Apollo Playground to get schema information)
+    return next();
+  }
+
   const token = req.headers["authorization"]?.split(" ")[1]; // Extract token from Authorization header
 
   if (!token) {
@@ -24,6 +29,6 @@ export const authMiddleware = (
     return res.status(401).send("Invalid or expired token"); // If token is invalid or expired
   }
 
-  req.userId = decoded.userId; // Attach the decoded user ID to the request object
+  //req["userId"] = decoded.userId; // Attach the decoded user ID to the request object
   next(); // Proceed to the next middleware or route handler
 };
